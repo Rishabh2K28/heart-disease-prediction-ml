@@ -2,38 +2,41 @@
 
 ## Overview
 
-This project implements a machine learning pipeline for predicting the presence of heart disease from patient clinical and demographic attributes.
+This project implements an end-to-end machine learning pipeline for predicting the presence of heart disease from patient clinical and demographic data.
 
-The project covers the complete machine learning workflow, including data loading, exploratory data analysis, data preprocessing, feature-target separation, model training, prediction and performance evaluation.
+The project covers the complete workflow, including exploratory data analysis, data preprocessing, feature-target separation, train-test splitting, model training, prediction, and performance evaluation.
 
 ## Problem Statement
 
-Heart disease prediction can be formulated as a binary classification problem where the model predicts whether a patient is likely to have heart disease based on clinical measurements.
+Heart disease prediction can be treated as a **binary classification problem**, where a machine learning model predicts whether a patient is likely to have heart disease based on clinical attributes.
 
-### Target
+### Target Variable
 
 * `0` → No heart disease
 * `1` → Heart disease present
 
 ## Dataset
 
-The project uses a heart disease dataset containing clinical attributes such as:
+The dataset contains **303 patient records and 14 attributes**, including the target variable.
 
-* Age
-* Sex
-* Chest pain type
-* Resting blood pressure
-* Cholesterol
-* Fasting blood sugar
-* Resting ECG
-* Maximum heart rate
-* Exercise-induced angina
-* ST depression
-* Slope
-* Number of major vessels
-* Thalassemia
+### Features
 
-Dataset source and attribution are provided in the notebook.
+* `age` — Age of the patient
+* `sex` — Gender of the patient
+* `cp` — Chest pain type
+* `trestbps` — Resting blood pressure
+* `chol` — Serum cholesterol
+* `fbs` — Fasting blood sugar
+* `restecg` — Resting electrocardiographic results
+* `thalach` — Maximum heart rate achieved
+* `exang` — Exercise-induced angina
+* `oldpeak` — ST depression induced by exercise
+* `slope` — Slope of the peak exercise ST segment
+* `ca` — Number of major vessels
+* `thal` — Thalassemia
+* `target` — Heart disease outcome
+
+The dataset used for the project is included in this repository as `data.csv`.
 
 ## Machine Learning Workflow
 
@@ -50,72 +53,87 @@ Feature / Target Separation
    ↓
 Train-Test Split
    ↓
-Model Training
+Logistic Regression Training
    ↓
 Prediction
    ↓
 Model Evaluation
 ```
 
-## Technologies Used
+## Exploratory Data Analysis
 
-* Python
-* NumPy
-* Pandas
-* Matplotlib
-* Seaborn
-* Scikit-learn
-* Google Colab
+The notebook performs exploratory analysis to understand the dataset and relationships between the features and target variable.
+
+The analysis includes:
+
+* Dataset inspection
+* Statistical analysis
+* Target variable distribution
+* Feature distributions
+* Correlation analysis
+* Correlation heatmap
 
 ## Model
 
-The project uses Logistic Regression for binary classification.
+The project uses **Logistic Regression** as the binary classification algorithm.
 
-The model is trained on the training dataset and evaluated on unseen test data.
+The dataset is divided into training and testing subsets, and the model is trained on the training data before being evaluated on unseen test data.
 
 ## Evaluation
 
-Model performance is evaluated using metrics such as:
+The model is evaluated using:
 
 * Accuracy Score
 * Confusion Matrix
 * Classification Report
 
-The exact results produced by the notebook are documented in the corresponding notebook outputs.
+The corresponding results and evaluation outputs are available in the Jupyter Notebook.
 
-## Exploratory Data Analysis
+## Technologies Used
 
-The notebook includes:
+* **Python**
+* **NumPy**
+* **Pandas**
+* **Matplotlib**
+* **Seaborn**
+* **Scikit-learn**
+* **Google Colab / Jupyter Notebook**
 
-* Dataset inspection
-* Statistical analysis
-* Target distribution analysis
-* Feature distribution visualization
-* Correlation analysis
-* Heatmap visualization
+## Project Structure
+
+```text
+heart-disease-prediction-ml/
+│
+├── data.csv
+├── heart_disease_prediction.ipynb
+├── README.md
+├── requirements.txt
+├── .gitignore
+└── LICENSE
+```
 
 ## How to Run
 
-### Option 1 — Google Colab
+### Google Colab
 
-Open the notebook in Google Colab and run the cells sequentially.
+Open `heart_disease_prediction.ipynb` in Google Colab and run the cells sequentially.
 
-### Option 2 — Local Environment
+### Local Environment
 
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/heart-disease-prediction-ml.git
+git clone https://github.com/Rishabh2K28/heart-disease-prediction-ml.git
 cd heart-disease-prediction-ml
 ```
 
-Install dependencies:
+Install the required dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Launch Jupyter:
+Launch Jupyter Notebook:
 
 ```bash
 jupyter notebook
@@ -127,16 +145,28 @@ Open:
 heart_disease_prediction.ipynb
 ```
 
-## Disclaimer
+Make sure `data.csv` is available in the project directory.
 
-This project is intended for educational and machine learning experimentation purposes only. It is not a medical diagnostic system and should not be used for clinical decision-making.
+## Repository
+
+**GitHub:**
+https://github.com/Rishabh2K28/heart-disease-prediction-ml
 
 ## Future Improvements
 
-* Hyperparameter tuning
-* Cross-validation
-* Comparison of multiple classification algorithms
-* Model serialization
-* Interactive Streamlit interface
-* Explainable AI using SHAP
-* Deployment as a web application
+* Compare Logistic Regression with other classification algorithms
+* Perform hyperparameter tuning and cross-validation
+* Add additional evaluation metrics
+* Build an interactive Streamlit interface
+* Serialize and deploy the trained model
+* Add model explainability using SHAP
+
+## Disclaimer
+
+This project is developed for educational and machine learning experimentation purposes only. It is **not a medical diagnostic system** and should not be used for clinical decision-making.
+
+## Credits
+
+This project was developed as a hands-on machine learning implementation based on the heart disease prediction tutorial by Siddhardhan.
+
+The implementation has been organized into a reproducible GitHub repository along with the dataset, notebook, dependencies, and documentation.
