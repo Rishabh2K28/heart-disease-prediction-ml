@@ -8,6 +8,12 @@ This project implements an end-to-end machine learning pipeline for predicting t
 
 The project covers the complete workflow, including exploratory data analysis, data preprocessing, feature-target separation, train-test splitting, model training, prediction, and performance evaluation.
 
+## 🚀 Live Demo
+
+👉 **[Try the Live Streamlit App](https://heart-disease-prediction-ml-bco5xkvowbyuv2wgsk2p5z.streamlit.app/)**
+
+You can enter patient clinical parameters and test the trained machine learning model directly through the deployed web application.
+
 ## Problem Statement
 
 Heart disease prediction can be treated as a **binary classification problem**, where a machine learning model predicts whether a patient is likely to have heart disease based on clinical attributes.
