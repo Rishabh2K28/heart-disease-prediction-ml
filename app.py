@@ -5,9 +5,9 @@ import streamlit as st
 from sklearn.linear_model import LogisticRegression
 
 
-# -----------------------------
+# -----------------------------------
 # Page configuration
-# -----------------------------
+# -----------------------------------
 st.set_page_config(
     page_title="Heart Disease Prediction",
     page_icon="❤️",
@@ -15,9 +15,9 @@ st.set_page_config(
 )
 
 
-# -----------------------------
+# -----------------------------------
 # Load dataset and train model
-# -----------------------------
+# -----------------------------------
 @st.cache_resource
 def load_model():
     heart_data = pd.read_csv("data.csv")
@@ -34,142 +34,217 @@ def load_model():
 model = load_model()
 
 
-# -----------------------------
-# Page title
-# -----------------------------
+# -----------------------------------
+# Title
+# -----------------------------------
 st.title("❤️ Heart Disease Prediction")
+
 st.write(
-    "Enter the patient's clinical information below to predict "
-    "the likelihood of heart disease."
+    "Enter the patient's clinical information below to "
+    "predict the presence of heart disease."
 )
 
 st.divider()
 
 
-# -----------------------------
+# -----------------------------------
 # Input fields
-# -----------------------------
+# -----------------------------------
 col1, col2 = st.columns(2)
 
 with col1:
+
     age = st.number_input(
         "Age",
-        min_value=1,
-        max_value=120,
+        min_value=0,
+        max_value=150,
         value=50,
         step=1
     )
 
     sex = st.selectbox(
         "Sex",
-        options=[0, 1],
-        format_func=lambda x: "Female (0)" if x == 0 else "Male (1)"
+        [0, 1],
+        format_func=lambda x:
+        "Female (0)" if x == 0 else "Male (1)"
     )
 
     cp = st.selectbox(
         "Chest Pain Type (cp)",
-        options=[0, 1, 2, 3]
+        [0, 1, 2, 3]
     )
 
     trestbps = st.number_input(
         "Resting Blood Pressure",
-        min_value=50,
-        max_value=250,
+        min_value=0,
+        max_value=300,
         value=120,
         step=1
     )
 
     chol = st.number_input(
         "Serum Cholesterol",
-        min_value=50,
-        max_value=700,
+        min_value=0,
+        max_value=1000,
         value=200,
         step=1
     )
 
     fbs = st.selectbox(
         "Fasting Blood Sugar > 120 mg/dl",
-        options=[0, 1],
-        format_func=lambda x: "No (0)" if x == 0 else "Yes (1)"
+        [0, 1],
+        format_func=lambda x:
+        "No (0)" if x == 0 else "Yes (1)"
     )
 
     restecg = st.selectbox(
         "Resting ECG",
-        options=[0, 1, 2]
+        [0, 1, 2]
     )
 
+
 with col2:
+
     thalach = st.number_input(
         "Maximum Heart Rate Achieved",
-        min_value=50,
-        max_value=250,
+        min_value=0,
+        max_value=300,
         value=150,
         step=1
     )
 
     exang = st.selectbox(
         "Exercise-Induced Angina",
-        options=[0, 1],
-        format_func=lambda x: "No (0)" if x == 0 else "Yes (1)"
+        [0, 1],
+        format_func=lambda x:
+        "No (0)" if x == 0 else "Yes (1)"
     )
 
     oldpeak = st.number_input(
         "ST Depression (oldpeak)",
         min_value=0.0,
-        max_value=10.0,
+        max_value=20.0,
         value=1.0,
         step=0.1
     )
 
     slope = st.selectbox(
         "Slope",
-        options=[0, 1, 2]
+        [0, 1, 2]
     )
 
     ca = st.selectbox(
         "Number of Major Vessels (ca)",
-        options=[0, 1, 2, 3, 4]
+        [0, 1, 2, 3, 4]
     )
 
     thal = st.selectbox(
         "Thalassemia (thal)",
-        options=[0, 1, 2, 3]
+        [0, 1, 2, 3]
     )
 
 
-# -----------------------------
+# -----------------------------------
 # Prediction
-# -----------------------------
+# -----------------------------------
 st.divider()
 
-if st.button("🔍 Predict Heart Disease", use_container_width=True):
+if st.button(
+    "🔍 Predict Heart Disease",
+    use_container_width=True
+):
 
-    input_data = (
-        age,
-        sex,
-        cp,
-        trestbps,
-        chol,
-        fbs,
-        restecg,
-        thalach,
-        exang,
-        oldpeak,
-        slope,
-        ca,
-        thal
-    )
+    invalid_inputs = []
 
-    input_array = np.asarray(input_data).reshape(1, -1)
+    # -----------------------------------
+    # Validate ranges
+    # -----------------------------------
 
-    prediction = model.predict(input_array)[0]
+    if age < 1 or age > 120:
+        invalid_inputs.append(
+            "Age must be between 1 and 120."
+        )
 
-    if prediction == 1:
-        st.error("⚠️ Prediction: Heart Disease Detected")
+    if trestbps < 50 or trestbps > 250:
+        invalid_inputs.append(
+            "Resting Blood Pressure must be between 50 and 250."
+        )
+
+    if chol < 50 or chol > 700:
+        invalid_inputs.append(
+            "Cholesterol must be between 50 and 700."
+        )
+
+    if thalach < 50 or thalach > 250:
+        invalid_inputs.append(
+            "Maximum Heart Rate must be between 50 and 250."
+        )
+
+    if oldpeak < 0 or oldpeak > 10:
+        invalid_inputs.append(
+            "ST Depression must be between 0 and 10."
+        )
+
+    # -----------------------------------
+    # Stop prediction if invalid
+    # -----------------------------------
+    if invalid_inputs:
+
+        st.error(
+            "⚠️ Prediction cannot be performed."
+        )
+
+        st.warning(
+            "Please enter values within the specified "
+            "ranges to run the model."
+        )
+
+        for error_message in invalid_inputs:
+            st.write(f"• {error_message}")
+
     else:
-        st.success("✅ Prediction: No Heart Disease Detected")
 
-    st.caption(
-        "This prediction is for educational purposes only and "
-        "is not a medical diagnosis."
-    )
+        # -----------------------------------
+        # Create input
+        # -----------------------------------
+        input_data = (
+            age,
+            sex,
+            cp,
+            trestbps,
+            chol,
+            fbs,
+            restecg,
+            thalach,
+            exang,
+            oldpeak,
+            slope,
+            ca,
+            thal
+        )
+
+        input_array = np.asarray(
+            input_data
+        ).reshape(1, -1)
+
+        # -----------------------------------
+        # Prediction
+        # -----------------------------------
+        prediction = model.predict(input_array)[0]
+
+        if prediction == 1:
+
+            st.error(
+                "⚠️ Prediction: Heart Disease Detected"
+            )
+
+        else:
+
+            st.success(
+                "✅ Prediction: No Heart Disease Detected"
+            )
+
+        st.caption(
+            "This prediction is for educational purposes only "
+            "and is not a medical diagnosis."
+        )
