@@ -149,16 +149,9 @@ with col2:
 # -----------------------------------
 st.divider()
 
-if st.button(
-    "🔍 Predict Heart Disease",
-    use_container_width=True
-):
+if st.button("🔍 Predict Heart Disease", use_container_width=True):
 
     invalid_inputs = []
-
-    # -----------------------------------
-    # Validate ranges
-    # -----------------------------------
 
     if age < 1 or age > 120:
         invalid_inputs.append(
@@ -185,28 +178,21 @@ if st.button(
             "ST Depression must be between 0 and 10."
         )
 
-    # -----------------------------------
-    # Stop prediction if invalid
-    # -----------------------------------
+    # STOP HERE if anything is invalid
     if invalid_inputs:
 
-        st.error(
-            "⚠️ Prediction cannot be performed."
-        )
+        st.error("⚠️ Prediction cannot be performed.")
 
         st.warning(
             "Please enter values within the specified "
             "ranges to run the model."
         )
 
-        for error_message in invalid_inputs:
-            st.write(f"• {error_message}")
+        for message in invalid_inputs:
+            st.write(f"• {message}")
 
     else:
 
-        # -----------------------------------
-        # Create input
-        # -----------------------------------
         input_data = (
             age,
             sex,
@@ -223,26 +209,14 @@ if st.button(
             thal
         )
 
-        input_array = np.asarray(
-            input_data
-        ).reshape(1, -1)
+        input_array = np.asarray(input_data).reshape(1, -1)
 
-        # -----------------------------------
-        # Prediction
-        # -----------------------------------
         prediction = model.predict(input_array)[0]
 
         if prediction == 1:
-
-            st.error(
-                "⚠️ Prediction: Heart Disease Detected"
-            )
-
+            st.error("⚠️ Prediction: Heart Disease Detected")
         else:
-
-            st.success(
-                "✅ Prediction: No Heart Disease Detected"
-            )
+            st.success("✅ Prediction: No Heart Disease Detected")
 
         st.caption(
             "This prediction is for educational purposes only "
