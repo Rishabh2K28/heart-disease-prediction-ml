@@ -1,5 +1,7 @@
 # ❤️ Heart Disease Prediction using Machine Learning
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Rishabh2K28/heart-disease-prediction-ml/blob/main/heart_disease_prediction.ipynb)
+
 ## Overview
 
 This project implements an end-to-end machine learning pipeline for predicting the presence of heart disease from patient clinical and demographic data.
